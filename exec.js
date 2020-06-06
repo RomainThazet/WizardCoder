@@ -2,16 +2,19 @@
 var selectionBar = document.getElementById("selectionBar");
 
 //Array contenant la suite d'actions à effectuer
-var flowExecution = new Array();
+var flowExecution;
 
 //position du personnage
-var position = data[0].spawn;
+var position;
 
 //largeur d'une case, on divise la largeur de l'écran de jeu (80vw) par le nombre de case à l'horizontal
-var tailleCase = 80/length;
+var tailleCase;
 
 //case suivante par rapport au personnage
 var nextPosition;
+
+//booléen qui sera mis à "true" si un échec ou un succès est detecté
+var stopExecution;
 
 //ENUM des obstacles
 var obstacles = {
@@ -28,20 +31,30 @@ var deplacements = {
 
 //dictionnaire permettant de stocker les éléments qui disparaissent lors de l'exécution afin de les réafficher lors de la réinitialisation du niveau
 var itemsDisparus = {};
-itemsDisparus['star'] = new Array();
-itemsDisparus[obstacles.ROUGE] = new Array();
-itemsDisparus[obstacles.JAUNE] = new Array();
-itemsDisparus[obstacles.VERT] = new Array();
+
+initVar();
 
 //--------------------------------------------------------------------------------------------
 
+function initVar(){
+    itemsDisparus['star'] = new Array();
+    itemsDisparus[obstacles.ROUGE] = new Array();
+    itemsDisparus[obstacles.JAUNE] = new Array();
+    itemsDisparus[obstacles.VERT] = new Array();
+    stopExecution = false;
+    tailleCase = 80/length;
+    position = data[0].spawn;
+    flowExecution = new Array();
+}
+
+//--------------------------------------------------------------------------------------------
+
+//se lance quand l'utilisateur clique sur le bouton "Lancer !"
 document.getElementById("btnLancer").onclick = function() {
-    flowExecution=Array();//reinitialisation du flow
     console.log(selectionBar.childNodes)
     for (var i = 0, action; action = selectionBar.childNodes[i]; i++) {
-        if (i!=0){
             flowExecution.push(action.className);//on remplit le flow avec les action présentes dans la selectionbar
-        }
+
     }
     execute(0)
 }
@@ -52,27 +65,32 @@ document.getElementById("btnLancer").onclick = function() {
 // execute recursivement chaque action du flow en laissant 2secondes entre chaque étapes pour laisser les animations se dérouler
 var compteurRepetitions = 0;
 function execute(etape) {
-    if(flowExecution.length > etape) {
-        var actionEnCours = selectionBar.childNodes[etape+1];
+
+    if (itemsDisparus['star'].length == 3) {
+        reussite();
+    }
+
+    if(flowExecution.length > etape && !stopExecution) {
+        var actionEnCours = selectionBar.childNodes[etape];
+
         actionEnCours.classList.add("focused");//on met l'action en cours situé dans la selectionbar en surbrillance
-		
-		var comoteurEtapeStart; //
-		
+
         switch (flowExecution[etape]) {
 			case 'repeat_start':
-				compteurEtapeStart = etape;
+				compteurEtapeStart = etape+1;
 				console.log("compteur = " + compteurEtapeStart);
                 break;
 					
 			case 'repeat_stop':
 				//cas d'erreur si la fin de boucle est présente sans départ de boucle
 				if (compteurEtapeStart == undefined) {
-					//boite de dialogue echec : fin de boucle sans début de boucle
+					echec();
 					console.log("fin de boucle sans début de boucle");
 					break;
 				}
-				
+
 				var intervalle = etape - compteurEtapeStart;
+
 				if (compteurRepetitions != 2) {
 					compteurRepetitions++;
 					actionEnCours.classList.remove("focused");
@@ -80,7 +98,6 @@ function execute(etape) {
 					return;
 				}
 				compteurRepetitions = 0;
-				
                 break;
 					
             case 'avancer':
@@ -105,7 +122,7 @@ function execute(etape) {
             execute(etape + 1)
         }, 2000)
     }
-    else {
+    else if (!stopExecution) {
         reinitialisationNiveau();//fin du flow d'exécution on réinitialise le niveau
     }
 }
@@ -121,20 +138,23 @@ function avancer() {
     if (nextCase!==null){
         switch (nextCase.className) {//on vérifie qu'il est possible pour le personnage d'avancer
             case 'obstacleRouge':
-                //boite de dialogue echec : obstacle rouge
+                echec();
                 break;
             case 'obstacleVert':
-                //boite de dialogue echec : obstacle vert
+                echec();
                 break;
             case 'obstacleJaune':
-                //boite de dialogue echec : obstacle jaune
+                echec();
+                break;
+            case 'borders':
+                echec();
                 break;
             default://le perso peut avancer
                 animationAvancer();
                 deplacement(deplacements.DROITE);
         }
     }else{//arrivé au bord du niveau
-        //boite de dialogue echec : bord de niveau
+        echec();
     }
 
 }
@@ -208,6 +228,7 @@ function reinitialisationNiveau() {
         }
     }
     reinitialisePositionPersonnage();
+    initVar();
 }
 
 //le personnage revient à sa position d'origine
@@ -233,10 +254,34 @@ function animationMonter() {
 
 //--------------------------------------------------------------------------------------------
 
+//lance la boite de dialogue d'echec
 function echec() {
+    stopExecution = true;
     $('#modalEchec').modal('toggle');
 }
 
+//lance la boite de dialogue de reussite
 function reussite() {
+    stopExecution = true;
     $('#modalReussite').modal('toggle');
 }
+
+//--------------------------------------------------------------------------------------------
+
+document.getElementsByClassName("reessayer").item(0).onclick = function() {
+    $('#modalEchec').modal('hide');
+    reinitialisationNiveau();
+}
+
+document.getElementsByClassName("reessayer").item(1).onclick = function() {
+    $('#modalReussite').modal('hide');
+    reinitialisationNiveau();
+}
+
+document.getElementById("suivant").onclick = function() {
+    $('#modalReussite').modal('hide');
+    lvl2();
+    levelGeneration();
+    initVar();
+}
+

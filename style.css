@@ -75,6 +75,26 @@ button{
 	box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset;
 }
 
+#actionBar>tbody::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#actionBar>tbody::-webkit-scrollbar-thumb {
+	background-color: #000000;
+}
+
+#actionBar>tbody::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#actionBar>tbody{
+	display: block;
+	height: 73vh;
+	overflow-y: scroll;
+}
+
 #tableJeu{
 	background-image: url("images/foret.png");
 	width: 80vw;
@@ -132,7 +152,6 @@ button{
 .sortRouge{
 	background-position: center;
 	display:inline-block;
-	text-align: center;
 	width: 6vw;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -141,7 +160,6 @@ button{
 .sortJaune{
 	background-position: center;
 	display:inline-block;
-	text-align: center;
 	width: 6vw;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -150,7 +168,6 @@ button{
 .sortVert{
 	background-position: center;
 	display:inline-block;
-	text-align: center;
 	width: 6vw;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -159,13 +176,13 @@ button{
 .monter{
 	background-position: center;
 	display:inline-block;
-	text-align: center;
 	width: 6vw;
 	background-size: contain;
 	background-repeat: no-repeat;
 }
 
 .avancer{
+	background-position: center;
 	display:inline-block;
 	width: 6vw;
 	background-size: contain;
@@ -173,21 +190,21 @@ button{
 }
 
 .repeat_start{
-	background-image: url("images/repeat_start.png");
 	display:inline-block;
 	text-align: center;
 	width: 7vw;
 	background-size: contain;
 	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .repeat_stop{
-	background-image: url("images/repeat_stop.png");
 	display:inline-block;
 	text-align: center;
 	width: 7vw;
 	background-size: contain;
 	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .personnageAvance {

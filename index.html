@@ -21,27 +21,29 @@ $(document).ready(function(){
 		<div class="row" id="ligne">
 			<!-- actions à chosir -->
 			<table id="actionBar" >
-				<tr class="draggable">
-					<td><input type='image' class="sortRouge" src="Sprites/sortilegeRouge.png"/></td>
-				</tr>
-				<tr class="draggable">
-					<td><input type='image' class="sortVert" src="Sprites/sortilegeVert.png"/></td>
-				</tr>
-				<tr class="draggable">
-					<td><input type='image' class="sortJaune" src="Sprites/sortilegeJaune.png"/></td>
-				</tr>
-				<tr class="draggable">
-					<td><input type='image' class="monter" src="images/arrow_haut.png"/></td>
-				</tr>
-				<tr class="draggable">
-					<td><input type='image' class="avancer" src="images/arrow_right.png"/></td>
-				</tr>
-				<tr class="draggable">
-					<td><input type='image' class="repeat_start" src="images/repeat_start.png"/></td>
-				</tr>
-				<tr class="draggable">
-					<td><input type='image' class="repeat_stop" src="images/repeat_stop.png"/></td>
-				</tr>
+				<tbody class="overflowScrollable">
+					<tr class="draggable">
+						<td><input type='image' class="sortRouge" src="Sprites/sortilegeRouge.png"/></td>
+					</tr>
+					<tr class="draggable">
+						<td><input type='image' class="sortVert" src="Sprites/sortilegeVert.png"/></td>
+					</tr>
+					<tr class="draggable">
+						<td><input type='image' class="sortJaune" src="Sprites/sortilegeJaune.png"/></td>
+					</tr>
+					<tr class="draggable">
+						<td><input type='image' class="monter" src="images/arrow_haut.png"/></td>
+					</tr>
+					<tr class="draggable">
+						<td><input type='image' class="avancer" src="images/arrow_right.png"/></td>
+					</tr>
+					<tr class="draggable">
+						<td><input type='image' class="repeat_start" src="images/repeat_start.png"/></td>
+					</tr>
+					<tr class="draggable">
+						<td><input type='image' class="repeat_stop" src="images/repeat_stop.png"/></td>
+					</tr>
+				</tbody>
 			</table>
 
 			<!-- Niveau de jeu (généré via levelGeneration.js -->
@@ -63,15 +65,12 @@ $(document).ready(function(){
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title">Echec</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
 						</div>
 						<div class="modal-body">
 							<p>Oh non, vous n'avez pas réussit à terminer le niveau !</p>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary">Réessayer</button>
+							<button type="button" class="btn btn-secondary reessayer">Réessayer</button>
 						</div>
 					</div>
 				</div>
@@ -81,16 +80,13 @@ $(document).ready(function(){
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title">Bravo !</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
 						</div>
 						<div class="modal-body">
 							<p>Bravo, vous avez compléter le niveau en récupérant toutes les étoiles !</p>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary">Niveau suivant</button>
-							<button type="button" class="btn btn-secondary">Réessayer</button>
+							<button type="button" class="btn btn-success suivant" id="suivant">Niveau suivant</button>
+							<button type="button" class="btn btn-secondary reessayer" >Réessayer</button>
 						</div>
 					</div>
 				</div>
@@ -98,6 +94,7 @@ $(document).ready(function(){
 		</div>
 </body>
 <script src="dragNdrop.js" type="text/javascript"></script>
+<script src="levels/lvl1.js" type="text/javascript"></script>
 <script src="levels/lvl2.js" type="text/javascript"></script>
 <script src="levelGeneration.js" type="text/javascript"></script>
 <script src="exec.js" type="text/javascript"></script>

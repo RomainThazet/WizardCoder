@@ -1,42 +1,61 @@
-const data = [
-    {
-        "length": 11,
-        "height": 5,
-        "borders":
-            [
-            ],
-        "ground":
-            [
-                "A1",
-                "B1",
-                "C1",
-                "D1",
-                "E1",
-                "F1",
-                "G1",
-                "H1",
-                "I1",
-                "J1"
-            ],
-        "ladders":
-            [
-                "E3",
-                "E2"
-            ],
-        "stars":
-            [
-                "F3"
-            ],
-        "yellow":
-            [
-                "C2"
-            ],
-        "green":
-            [
-            ],
-        "red":
-            [
-            ],
-        "spawn": "B2"
-    }
-];
+function lvl2(){
+    data = [
+        {
+            "length": 11,
+            "height": 5,
+            "borders":
+                [
+                    "G2",
+                    "H2",
+                    "I2",
+                    "J2",
+                    "J3",
+                    "J4",
+                    "I4",
+                    "H4",
+                    "G4",
+                    "F4",
+                    "E4",
+                    "E3"
+                ],
+            "ground":
+                [
+                    "A1",
+                    "B1",
+                    "C1",
+                    "D1",
+                    "E1",
+                    "F1",
+                    "G1",
+                    "H1",
+                    "I1",
+                    "J1",
+                    "K1"
+                ],
+            "ladders":
+                [
+                    "F3",
+                    "F2"
+                ],
+            "stars":
+                [
+                    "G3",
+                    "H3",
+                    "I3"
+                ],
+            "yellow":
+                [
+                ],
+            "green":
+                [
+                    "C2",
+                    "D2",
+                    "E2"
+                ],
+            "red":
+                [
+                ],
+            "spawn": "B2"
+        }
+    ];
+}
