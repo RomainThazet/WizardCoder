@@ -6,7 +6,7 @@
 
         applyDragEvents: function(element) {
 			
-			
+		
 			element.draggable = true;
 			
             var dndHandler = this; // Nécessaire pour que l'événement « dragstart » ci-dessous accède facilement au namespace « dndHandler »
@@ -39,7 +39,11 @@
 
             dropper.addEventListener('drop', function(e) {
 
-			
+				if (window.etat == 1) {
+					limite = 0;
+					etat = 0;
+				}
+				
 				if (limite == 10) {
 					stopImmediatePropagation();
 				}
@@ -64,6 +68,8 @@
 
     };
 	
+	
+  
 	var limite=0;
 
     var elements = document.querySelectorAll('.draggable'),

@@ -262,6 +262,8 @@ function echec() {
 
 //lance la boite de dialogue de reussite
 function reussite() {
+	window.etat = 1;
+	
     stopExecution = true;
     $('#modalReussite').modal('toggle');
 }
