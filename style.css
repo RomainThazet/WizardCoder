@@ -1,0 +1,228 @@
+/* GENERAL ---------------------------------------------------------------------------*/
+body{
+	padding-top: 2vh;
+	padding-left: 2vw;
+	padding-bottom: 2vh;
+	padding-right: 2vw;
+	background-image: url("images/grey.jpg");
+	background-size: contain;
+
+}
+td{
+	background-size: contain;
+	background-repeat: no-repeat;
+	text-align: center;
+	vertical-align: middle;
+}
+
+button{
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.dropper {
+    transition: all 200ms linear;
+}
+
+.drop_hover {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8) inset;
+}
+
+.draggable {
+    cursor: move;
+
+    transition: all 200ms linear;
+    user-select: none;
+}
+/* ID ---------------------------------------------------------------------------*/
+
+/* Radius de la abrre d'action verte */
+
+#ligne{
+	margin-bottom: 1vw;
+}
+
+#lvl>tr>td{
+	border: 1px solid black;
+}
+
+#btnLancer{
+	height: 9vw;
+	border-radius: 100px;
+
+}
+
+#selectionBar{
+	height: 9vw;
+	width: 80vw;
+	max-width: 80vw;
+	background-color: #1e8c08;
+	border: 0.5vw solid #195c06;
+	vertical-align: middle;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset;
+}
+
+#selectionBar>input{
+	margin-top: 2vh;
+	margin-left: 2vh;
+}
+
+#actionBar{
+	width: 9vw;
+	height: 70vh;
+	background-color: #8c4d06;
+	border: 0.5vw solid #633d04;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset;
+}
+
+#tableJeu{
+	background-image: url("images/foret.png");
+	width: 80vw;
+	height: 75vh;
+	background-size: contain;
+}
+/* CLASS ---------------------------------------------------------------------------*/
+
+.focused{
+	border-radius: 0.5vw;
+	border: 0.25vw solid white;
+}
+
+.colonne2{
+	margin-left: 1vw;
+}
+
+.borders {
+	background-image: url("Sprites/sol.png");
+}
+
+.ground{
+	background-image: url("Sprites/solHerbe.jpg");
+}
+
+.obstacleRouge{
+	background-image: url("Sprites/obstaclerouge.png");
+}
+
+.obstacleVert{
+	background-image: url("Sprites/obstacleVertv2.png");
+}
+
+.obstacleJaune{
+	background-image: url("Sprites/obstacleJaunev2.png");
+}
+
+.ladder{
+	background-image: url("Sprites/echelle.png");
+}
+
+.star{
+	background-image: url("Sprites/star.png");
+}
+
+.foret{
+	background-image: url("images/foret.png");
+}
+
+.personnage{
+	background-image: url("Sprites/personnagev2.png");
+	transition: transform 1s;
+}
+
+.sortRouge{
+	background-position: center;
+	display:inline-block;
+	text-align: center;
+	width: 6vw;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.sortJaune{
+	background-position: center;
+	display:inline-block;
+	text-align: center;
+	width: 6vw;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.sortVert{
+	background-position: center;
+	display:inline-block;
+	text-align: center;
+	width: 6vw;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.monter{
+	background-position: center;
+	display:inline-block;
+	text-align: center;
+	width: 6vw;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.avancer{
+	display:inline-block;
+	width: 6vw;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.repeat_start{
+	background-image: url("images/repeat_start.png");
+	display:inline-block;
+	text-align: center;
+	width: 7vw;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.repeat_stop{
+	background-image: url("images/repeat_stop.png");
+	display:inline-block;
+	text-align: center;
+	width: 7vw;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.personnageAvance {
+	background-image: url("Sprites/personnagev2.png");
+	animation-duration: 2s;
+	animation-name: avancer;
+
+}
+
+.personnageMonte {
+	background-image: url("Sprites/personnagev2.png");
+	animation-duration: 2s;
+	animation-name: monter;
+}
+
+.disparition {
+	animation-duration: 2s;
+	animation-name: disparaitre;
+
+}
+
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* KEYFRAMES ---------------------------------------------------------------------------*/
+
+
+@keyframes disparaitre {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
