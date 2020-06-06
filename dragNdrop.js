@@ -5,9 +5,10 @@
         draggedElement: null, // Propriété pointant vers l'élément en cours de déplacement
 
         applyDragEvents: function(element) {
-
-            element.draggable = true;
-
+			
+			
+			element.draggable = true;
+			
             var dndHandler = this; // Nécessaire pour que l'événement « dragstart » ci-dessous accède facilement au namespace « dndHandler »
 
             element.addEventListener('dragstart', function(e) {
@@ -20,7 +21,9 @@
         applyDropEvents: function(dropper) {
 
             dropper.addEventListener('dragover', function(e) {
+				
                 e.preventDefault(); // On autorise le drop d'éléments
+			
                 this.className = 'dropper drop_hover '; // Et on applique le style adéquat à notre zone de drop quand un élément la survole
             });
 
@@ -36,6 +39,12 @@
 
             dropper.addEventListener('drop', function(e) {
 
+			
+				if (limite == 10) {
+					stopImmediatePropagation();
+				}
+				limite++;
+				console.log("Limite=  " + limite);
                 var target = e.target,
                     draggedElement = dndHandler.draggedElement, // Récupération de l'élément concerné
                     clonedElement = draggedElement.cloneNode(true); // On créé immédiatement le clone de cet élément
@@ -54,6 +63,8 @@
         }
 
     };
+	
+	var limite=0;
 
     var elements = document.querySelectorAll('.draggable'),
         elementsLen = elements.length;
