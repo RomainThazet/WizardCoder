@@ -5,10 +5,14 @@ var selectionBar = document.getElementById("selectionBar");
 var flowExecution;
 
 //position du personnage
-var position;
+var position = data[0].spawn;
+
+length = data[0].length;
+height = data[0].height;
 
 //largeur d'une case, on divise la largeur de l'écran de jeu (80vw) par le nombre de case à l'horizontal
-var tailleCase;
+var tailleCase = 80/length;
+var HauteurCase = 75/height;
 
 //case suivante par rapport au personnage
 var nextPosition;
@@ -80,7 +84,7 @@ function execute(etape) {
 				compteurEtapeStart = etape+1;
 				console.log("compteur = " + compteurEtapeStart);
                 break;
-					
+
 			case 'repeat_stop':
 				//cas d'erreur si la fin de boucle est présente sans départ de boucle
 				if (compteurEtapeStart == undefined) {
@@ -99,11 +103,11 @@ function execute(etape) {
 				}
 				compteurRepetitions = 0;
                 break;
-					
+
             case 'avancer':
                 avancer();
                 break;
-				
+
             case 'monter':
                 monter();
                 break;
@@ -150,7 +154,7 @@ function avancer() {
                 echec();
                 break;
             default://le perso peut avancer
-                animationAvancer();
+                setTimeout(animationAvancer(), 1000);
                 deplacement(deplacements.DROITE);
         }
     }else{//arrivé au bord du niveau
@@ -161,14 +165,14 @@ function avancer() {
 
 //vérifie que le personnage peut monter d'une case et le fait se déplacer si c'est possible
 function monter() {
-    //nextPosition est censé stocker la case suivante sur l'axe des ordonnées : si notre position est A2 nextPosition vaudra A3
     nextPosition = position.charAt(0)+(parseInt(position.charAt(1))+1).toString();
     var nextCase = document.getElementById(nextPosition);
-    if (nextCase!==null){
-        if (nextCase.className == "ladder"){
-            animationMonter();
-            deplacement(deplacements.HAUT)
-        }
+    var Case = document.getElementById(position);
+    if (Case.className == "ladder personnage"){
+        setTimeout(animationMonter(), 1000);
+        deplacement(deplacements.HAUT)
+    } else {
+        echec();
     }
 }
 
@@ -189,9 +193,12 @@ function detruireObstacle(typeObstacle) {
 
 //enleve la classe "personnage" de la case actuelle et l'affecte à la case suivante
 function deplacement(direction) {
-    if(document.getElementById(nextPosition).className=="star"){
+    if (document.getElementById(nextPosition).className=="star"){
         itemsDisparus["star"].push(nextPosition);//on récupère les infos de l'item qui va disparaitre pour la réinitialisation du niveau
         document.getElementById(nextPosition).classList.remove("star");
+    }
+    if (document.getElementById(nextPosition).className=="borders" || document.getElementById(nextPosition).className=="ground") {
+        echec();
     }
     setTimeout(function () {//on attend la fin de l'animation
         document.getElementById(position).classList.remove("personnage");
@@ -199,7 +206,7 @@ function deplacement(direction) {
         if (direction==deplacements.DROITE){
             document.getElementById(position).style.transform += 'translateX(-'+tailleCase+'vw)'
         }else{
-            document.getElementById(position).style.transform += 'translateY('+tailleCase+'vw)'
+            document.getElementById(position).style.transform += 'translateY(' + HauteurCase + 'vh)'
         }
         position = nextPosition;
     }, 1000)
@@ -220,10 +227,8 @@ function destruction(typeObstacle) {
 
 //les items ayant éventuellement disparus du niveau (étoiles, obstacles) sont réaffichés
 function reinitialisationNiveau() {
-    console.log(itemsDisparus)
     for (var cle of Object.keys(itemsDisparus)){
         for (var valeur of itemsDisparus[cle]){
-            console.log(valeur)
             document.getElementById(valeur.toString()).classList.add(cle);
         }
     }
@@ -236,20 +241,23 @@ function reinitialisePositionPersonnage() {
     document.getElementById(position).classList.remove("personnage");
     position = data[0].spawn;
     document.getElementById(position).classList.add("personnage");
+    document.getElementById(position).style.animationName = null;
 }
 
 //--------------------------------------------------------------------------------------------
 
 function animationAvancer() {
-    var elem = document.getElementById(position)
-    elem.style.position = 'relative';
-    elem.style.transform += 'translateX('+tailleCase+'vw)';
+    var elem = document.getElementById(position);
+    elem.style.animationName = 'avancer';
+    elem.style.transition = 'transform 1000ms ease-in-out';
+    elem.style.transform = 'translateX(' + tailleCase + 'vw)';
 }
 
 function animationMonter() {
-    var elem = document.getElementById(position)
-    elem.style.position = 'relative';
-    elem.style.transform += 'translateY(-'+tailleCase+'vw)';
+    var elem = document.getElementById(position);
+    elem.style.animationName = 'monter';
+    elem.style.transition = 'transform 1000ms ease-in';
+    elem.style.transform = 'translateY(-' + HauteurCase + 'vh)';
 }
 
 //--------------------------------------------------------------------------------------------
@@ -263,7 +271,7 @@ function echec() {
 //lance la boite de dialogue de reussite
 function reussite() {
 	window.etat = 1;
-	
+
     stopExecution = true;
     $('#modalReussite').modal('toggle');
 }

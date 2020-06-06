@@ -145,8 +145,10 @@ button{
 }
 
 .personnage{
-	background-image: url("Sprites/personnagev2.png");
-	transition: transform 1s;
+	background-position: bottom;
+	animation-iteration-count: infinite;
+	animation-duration: 1s;
+	animation-name: stand;
 }
 
 .sortRouge{
@@ -208,14 +210,13 @@ button{
 }
 
 .personnageAvance {
-	background-image: url("Sprites/personnagev2.png");
+	background-position: bottom;
 	animation-duration: 2s;
 	animation-name: avancer;
 
 }
 
 .personnageMonte {
-	background-image: url("Sprites/personnagev2.png");
 	animation-duration: 2s;
 	animation-name: monter;
 }
@@ -223,7 +224,6 @@ button{
 .disparition {
 	animation-duration: 2s;
 	animation-name: disparaitre;
-
 }
 
 
@@ -241,5 +241,58 @@ button{
 	}
 	to {
 		opacity: 0;
+	}
+}
+
+@keyframes stand {
+	0% {
+		background-image: url("Sprites/perso/alert_0.png");
+	}
+	10% {
+		background-image: url("Sprites/perso/alert_1.png");
+	}
+	30% {
+		background-image: url("Sprites/perso/alert_2.png");
+	}
+	50% {
+		background-image: url("Sprites/perso/alert_3.png");
+	}
+	70% {
+		background-image: url("Sprites/perso/alert_2.png");
+	}
+	90% {
+		background-image: url("Sprites/perso/alert_1.png");
+	}
+	100% {
+		background-image: url("Sprites/perso/alert_0.png");
+	}
+}
+@keyframes avancer {
+	0% {
+		background-image: url("Sprites/perso/walk1_0.png");
+	}
+	25% {
+		background-image: url("Sprites/perso/walk1_1.png");
+	}
+	50% {
+		background-image: url("Sprites/perso/walk1_2.png");
+	}
+	75% {
+		background-image: url("Sprites/perso/walk1_3.png");
+	}
+	100% {
+		background-image: url("Sprites/perso/walk1_4.png");
+	}
+}
+
+@keyframes monter {
+	0% {
+		background-image: url("Sprites/perso/ladder_0.png");
+	}
+	50% {
+		background-image: url("Sprites/perso/ladder_1.png");
+	}
+	100% {
+		background-image: url("Sprites/perso/ladder_2.png");
 	}
 }
