@@ -31,6 +31,7 @@
 				var target = e.target,
 				draggedElement = dndHandler.draggedElement; // Récupération de l'élément concerné
 				target.removeChild(draggedElement);
+				limite--;
                 this.className = 'dropper colonne2'; // Retour au style de base si élément sort de la zone de drop
 				
             });
