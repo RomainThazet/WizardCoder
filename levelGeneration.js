@@ -4,7 +4,7 @@ var height;
 var data;
 var tableBody = document.getElementById("lvl");//tbody de tableJeu
 
-lvl1();//met les données JSON du premier niveau dans la variable data
+lvl2();//met les données JSON du premier niveau dans la variable data
 
 levelGeneration();
 

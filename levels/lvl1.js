@@ -30,6 +30,7 @@ function lvl1() {
                 ],
             "ladders":
                 [
+                    "B2",
                     "G3",
                     "G2"
                 ],

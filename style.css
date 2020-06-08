@@ -210,14 +210,13 @@ button{
 }
 
 .personnageAvance {
-	background-position: bottom;
-	animation-duration: 2s;
+	animation-duration: 1s;
 	animation-name: avancer;
 
 }
 
 .personnageMonte {
-	animation-duration: 2s;
+	animation-duration: 1s;
 	animation-name: monter;
 }
 

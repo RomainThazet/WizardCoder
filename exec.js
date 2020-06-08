@@ -5,14 +5,13 @@ var selectionBar = document.getElementById("selectionBar");
 var flowExecution;
 
 //position du personnage
-var position = data[0].spawn;
+var position;
 
-length = data[0].length;
-height = data[0].height;
+//largeur d'une case, on divise la largeur de l'écran de jeu (80vw) par le nombre de cases à l'horizontal
+var tailleCase;
 
-//largeur d'une case, on divise la largeur de l'écran de jeu (80vw) par le nombre de case à l'horizontal
-var tailleCase = 80/length;
-var HauteurCase = 75/height;
+//hauteur d'une case, on divise la hauteur de l'écran de jeu (75vw) par le nombre de cases à la vertical
+var HauteurCase;
 
 //case suivante par rapport au personnage
 var nextPosition;
@@ -40,13 +39,14 @@ initVar();
 
 //--------------------------------------------------------------------------------------------
 
-function initVar(){
+function initVar(){//initialisation de toutes les variables importantes à l'exécution du flow
     itemsDisparus['star'] = new Array();
     itemsDisparus[obstacles.ROUGE] = new Array();
     itemsDisparus[obstacles.JAUNE] = new Array();
     itemsDisparus[obstacles.VERT] = new Array();
     stopExecution = false;
     tailleCase = 80/length;
+    HauteurCase = 75/data[0].height;
     position = data[0].spawn;
     flowExecution = new Array();
 }
@@ -111,12 +111,15 @@ function execute(etape) {
             case 'monter':
                 monter();
                 break;
+
             case 'sortVert':
                 detruireObstacle(obstacles.VERT);
                 break;
+
             case 'sortJaune':
                 detruireObstacle(obstacles.JAUNE);
                 break;
+
             case 'sortRouge':
                 detruireObstacle(obstacles.ROUGE);
                 break;
@@ -153,6 +156,9 @@ function avancer() {
             case 'borders':
                 echec();
                 break;
+            case 'ground':
+                echec();
+                break;
             default://le perso peut avancer
                 setTimeout(animationAvancer(), 1000);
                 deplacement(deplacements.DROITE);
@@ -168,12 +174,30 @@ function monter() {
     nextPosition = position.charAt(0)+(parseInt(position.charAt(1))+1).toString();
     var nextCase = document.getElementById(nextPosition);
     var Case = document.getElementById(position);
-    if (Case.className == "ladder personnage"){
-        setTimeout(animationMonter(), 1000);
-        deplacement(deplacements.HAUT)
-    } else {
-        echec();
-    }
+    if (Case.className == "ladder personnage" && nextCase != null) {
+        switch (nextCase.className) {//on vérifie qu'il est possible pour le personnage de monter
+            case 'obstacleRouge':
+                echec();
+                break;
+            case 'obstacleVert':
+                echec();
+                break;
+            case 'obstacleJaune':
+                echec();
+                break;
+            case 'borders':
+                echec();
+                break;
+            case 'ground':
+                echec();
+                break;
+            default://le perso peut monter
+                setTimeout(animationMonter(), 1000);
+                deplacement(deplacements.HAUT)
+        }
+    }else {
+            echec();
+        }
 }
 
 
@@ -197,15 +221,12 @@ function deplacement(direction) {
         itemsDisparus["star"].push(nextPosition);//on récupère les infos de l'item qui va disparaitre pour la réinitialisation du niveau
         document.getElementById(nextPosition).classList.remove("star");
     }
-    if (document.getElementById(nextPosition).className=="borders" || document.getElementById(nextPosition).className=="ground") {
-        echec();
-    }
     setTimeout(function () {//on attend la fin de l'animation
         document.getElementById(position).classList.remove("personnage");
         document.getElementById(nextPosition).classList.add("personnage");
         if (direction==deplacements.DROITE){
             document.getElementById(position).style.transform += 'translateX(-'+tailleCase+'vw)'
-        }else{
+        }else {
             document.getElementById(position).style.transform += 'translateY(' + HauteurCase + 'vh)'
         }
         position = nextPosition;
@@ -248,16 +269,24 @@ function reinitialisePositionPersonnage() {
 
 function animationAvancer() {
     var elem = document.getElementById(position);
-    elem.style.animationName = 'avancer';
+    elem.classList.add("personnageAvance");
     elem.style.transition = 'transform 1000ms ease-in-out';
     elem.style.transform = 'translateX(' + tailleCase + 'vw)';
+    setTimeout(function () {
+        elem.style.transition = "";
+        elem.classList.remove("personnageAvance");
+    },1000)
 }
 
 function animationMonter() {
     var elem = document.getElementById(position);
-    elem.style.animationName = 'monter';
+    elem.classList.add("personnageMonte");
     elem.style.transition = 'transform 1000ms ease-in';
     elem.style.transform = 'translateY(-' + HauteurCase + 'vh)';
+    setTimeout(function () {
+        elem.classList.remove("personnageMonte");
+        elem.style.transition="";
+    },1000)
 }
 
 //--------------------------------------------------------------------------------------------
